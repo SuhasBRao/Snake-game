@@ -1,2 +1,3 @@
 # Snake-game
-contains code for a simple snake game using python3
+---
+Hey there welcome to this repo, This repo
