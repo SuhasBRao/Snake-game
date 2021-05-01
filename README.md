@@ -6,7 +6,10 @@ Who has not played the historic *[Snake](https://www.itsnicethat.com/features/ta
 ---
 The project aims to build a simple snake game using *[Python](https://www.python.org/)* and an *[Open-source](https://en.wikipedia.org/wiki/Open_source)* cross-platform library called *[Pygame](https://www.pygame.org/wiki/about)*. Though the project does not include all the functionaities of the game, It develops a simple game which is controlled by arrow keys on the keyboard. The game also records the users best score. It displays users current score on the window. Though its just a basic game it is good for beginners to get hands on experience with python and the pygame library.
 
-<h3> Here's a glimpse of the game </h3>
+## Uniqueness of the project
+---
+Though there are plenty of tutorials on the Internet on building the ***Snake Game***, One unique feature of this project is that the game is made capable to store users best score. This feature makes use of a txt file which is read and overwritten each time the user's current game score is higher than previous best score. Initially the score is set to 0 in a txt file. This txt file has to be in the same folder/directory where the .py file is stored.
+<h2> Here's a glimpse of the game </h2>
 <p align = "center">
   <img src = "snake.gif" width = 400 height = 400 />
 </p>
