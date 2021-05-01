@@ -9,6 +9,18 @@ The project aims to build a simple snake game using *[Python](https://www.python
 ## Uniqueness of the project
 ---
 Though there are plenty of tutorials on the Internet on building the ***Snake Game***, One unique feature of this project is that the game is made capable to store users best score. This feature makes use of a txt file which is read and overwritten each time the user's current game score is higher than previous best score. Initially the score is set to 0 in a txt file. This txt file has to be in the same folder/directory where the .py file is stored.
+I took the game prototype form [here](https://www.edureka.co/blog/snake-game-with-pygame/). The author has given a detailed explanation on how to implement a snake game using pytohn from scratch. *I recommend you to check it once*.
+
+## Structure of the repository
+---
+Structure of my github repository for snake game is as follows,
+- 
+-
+
+[My Snake game repository](https://github.com/SuhasBRao/Snake-game)
+
+
+
 <h2> Here's a glimpse of the game </h2>
 <p align = "center">
   <img src = "snake.gif" width = 400 height = 400 />
