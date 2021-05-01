@@ -14,12 +14,15 @@ I took the game prototype form [here](https://www.edureka.co/blog/snake-game-wit
 ## Structure of the repository
 ---
 Structure of my github repository for snake game is as follows,
-- 
--
+- Previous .py files - This is folder contains the .py files which i worked on while implementing the project. It's contents can be treated as versions from beginning prototype till final implementation.
+- best_score.txt - This txt file keeps track of users best score.
+- game_over.png - this image is displayed when the game ends.
+- README.md - This markdown file contains details about the project.
+- snake_game.py - This is the main .py which implements the game.
+- snake.gif - This gif shows a final implementation of the game.
+- Welcome.png - This image is displayed at the start of the game.
 
 [My Snake game repository](https://github.com/SuhasBRao/Snake-game)
-
-
 
 <h2> Here's a glimpse of the game </h2>
 <p align = "center">
