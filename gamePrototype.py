@@ -1,3 +1,8 @@
+################################################################################
+# THis is the first prototype of the snake game i'll be creating.
+# This has controls and displays the user score.
+# after the game is over we can either continue to play or exit the window
+################################################################################
 import pygame
 import random
 import time
@@ -44,22 +49,22 @@ def game_loop():
     y1 = display_height/2
     x_change = 0
     y_change = 0
-    
+
     snake_list = []
     length_of_snake = 1
 
 
     foodx = round(random.randrange(0,display_width - snake_block) /10.0 )* 10.0
     foody = round(random.randrange(0, display_height - snake_block) / 10.0 ) *10.0
-    
-    while not game_over:						#While loop for the screen to get displayed 
+
+    while not game_over:						#While loop for the screen to get displayed
 
         pygame.display.update()
 
         while game_close == True:
             d.fill(black)
             message('You lost, Press p-play again or q-quit', green)
-            
+
             Your_score(length_of_snake -1)
 
             pygame.display.update()
@@ -74,7 +79,7 @@ def game_loop():
                         game_loop()
 
         for event in pygame.event.get():		# until quit button is pressed
-        	
+
 
         	if event.type == pygame.QUIT:
         		game_over = True                # if event is quit / if exit button is pressed it exits from the screen
@@ -93,8 +98,8 @@ def game_loop():
         			y_change = snake_block
 
         x1 += x_change
-        y1 += y_change 
-     # IF YOU DONT WANT END THE GAME IF SNAKE TOUCHES THE BORDER REMOVE THE BELOW COMMENTS 
+        y1 += y_change
+     # IF YOU DONT WANT END THE GAME IF SNAKE TOUCHES THE BORDER REMOVE THE BELOW COMMENTS
      #   if x1 > display_width:
      #       x1 = 0
      #   elif x1 < 0:
@@ -113,7 +118,7 @@ def game_loop():
         snake_head.append(y1)
 
         snake_list.append(snake_head)
-        
+
         if len(snake_list) > length_of_snake:
             del snake_list[0]
 
@@ -125,8 +130,8 @@ def game_loop():
         Your_score(length_of_snake -1)
 
         pygame.display.update()
-        
-        
+
+
         if x1 == foodx and y1 == foody:
             foodx = round(random.randrange(0, display_width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, display_height - snake_block) / 10.0) * 10.0
@@ -134,7 +139,7 @@ def game_loop():
 
 
         clock.tick(snake_speed)
-    
+
     pygame.quit()
     quit()
 
