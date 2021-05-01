@@ -1,4 +1,5 @@
 #### Snake-game | [Go Back](https://suhasbrao.github.io/)
+
 <samp>Snake-game Using Python and Pygame</samp>
 ---
 Who has not played the historic *[Snake](https://www.itsnicethat.com/features/taneli-armanto-the-history-of-snake-design-legacies-230221)* game on Nokia mobile phones. Still, to this very day, people of all ages will have heard of Snake – they might have even played the original, or know an older person who has. I myself was addicted to the game back in my childhood. Though modern games have advanced user interfaces and better graphics, I still miss that excitement while playing them. I always wanted to recreate that excitement and feeling, Thanks to the programming languages which allow us to build such cool stuffs.
