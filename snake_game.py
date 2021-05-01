@@ -35,7 +35,7 @@ snake_block = 10
 snake_speed = 7
 snake_color = snake_green
 ######## load the snake_image.png image ######
-snake_img = pygame.image.load('snake_game.png')
+snake_img = pygame.image.load('Welcome.png')
 game_over_img = pygame.image.load('game_over.png')
 
 font_style = pygame.font.SysFont('sarai', 24)
