@@ -67,7 +67,9 @@ def message(txt,color,w,l):
 def our_snake(snake_block, snake_list):
     global snake_color
     for x in snake_list:
-        pygame.draw.rect(d, snake_color, [x[0],x[1], snake_block,snake_block])
+        #pygame.draw.rect(d, snake_color, [x[0],x[1], snake_block,snake_block])
+        pygame.draw.circle(d, snake_color,[x[0],x[1]], 7)
+
 
 def quit_game():
         pygame.quit()
@@ -183,7 +185,8 @@ def game_loop(): # main GAME LOOP
             game_close = True
 
         d.fill(black)
-        pygame.draw.rect(d,red, [int(foodx), int(foody), snake_block- 5,snake_block - 5])
+        pygame.draw.rect(d,red, [int(foodx), int(foody), snake_block,snake_block])
+        #pygame.draw.circle(d,red,[int(foodx), int(foody)], 5)
         snake_head =[]
         snake_head.append(x1)
         snake_head.append(y1)
