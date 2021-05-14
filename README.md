@@ -18,7 +18,6 @@
   <button class="btn"><i class="material-icons">home</i></button></a>
 <a href="https://suhasbrao.github.io/FaceDetection/" >
   <button class="btn"><i class="material-icons">arrow_back_ios</i></button></a>
-
 <a href="https://suhasbrao.github.io/Text-To-Speech/" >
   <button class="btn"><i class="material-icons">arrow_forward_ios</i></button></a>
 
