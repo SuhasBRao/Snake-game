@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="/assets/style.css"
+<link rel="stylesheet" href="/assets/style.css">
 
 <a href="https://suhasbrao.github.io/" >
   <button class="btn"><i class="material-icons">home</i></button></a>
