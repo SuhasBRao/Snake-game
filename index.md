@@ -38,5 +38,5 @@ Structure of my github repository for snake game is as follows,
 
 <h2><samp> Here's a glimpse of the game </samp></h2>
 <p align = "center">
-  <img src = "/assets/snake.gif" width = 400 height = 400 />
+  <img src = "snake.gif" width = 400 height = 400 />
 </p>
