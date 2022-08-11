@@ -16,8 +16,8 @@ import random
 import time
 pygame.init()
 
-#######################################
-######## Initialize the colors#########
+########################################
+######## Initialize the colors #########
 white = (255,255,255)
 blue = (0,0,255)
 green = (0,255,0)
@@ -55,13 +55,10 @@ def load_and_show_snake_image(w,l):
     snake_img = pygame.image.load('Welcome.png')
     game_window.blit(snake_img,(w,l))
 
-def show_game_over(w,l):
-    game_over_img = pygame.image.load('game_over.png')
-    game_window.blit(game_over_img,(w,l))
-
 def show_current_score(score):
     value = score_font.render(f'Your score: {score}', True, yellow)
     game_window.blit(value, score_position_in_pixel)
+    pygame.display.update()
 
 def display_message(txt,color,w,l):
     mesg = font_style.render(txt,True, color)
@@ -80,32 +77,61 @@ def show_snake(snake_size, snake_list):
         #print(x[0], x[1])
         #pygame.draw.rect(game_window, snake_color, [x[0],x[1], snake_size,snake_size])
         pygame.draw.circle(game_window, snake_color,[x[0],x[1]], snake_size)
-        
-def quit_game():
-    pygame.quit()
-    quit()
 
-# Button function for display of buttons
-def button(msg, btn_xpos, btn_ypos, btn_width, btn_height, inactive_color, active_color, action = None):
-    mouse = pygame.mouse.get_pos()
+def grab_values_for_button(txt_on_button):
+    if txt_on_button == 'YES':
+        return 10,131, 80,40, (light_green,green)
+    if txt_on_button == 'NO':
+        return 100,130, 80,40 , (light_red, red)
+    
+def show_buttons(msg, action = None):
+    
+    btn_xpos, btn_ypos, btn_width, btn_height, btn_color = grab_values_for_button(msg)
+    inactive_color, active_color = btn_color
+    
+    mouse_pos = pygame.mouse.get_pos()
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-
-            if btn_xpos+btn_width > mouse[0] > btn_xpos and btn_ypos+btn_height > mouse[1] > btn_ypos:
+            if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
+            and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
                 action()
 
-    if btn_xpos+btn_width > mouse[0] > btn_xpos and btn_ypos+btn_height > mouse[1] > btn_ypos:
-        pygame.draw.rect(game_window,active_color,[btn_xpos, btn_ypos, btn_width, btn_height])
+    if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
+        and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
+        pygame.draw.rect(game_window, active_color, [btn_xpos, btn_ypos, btn_width, btn_height])
     else:
-        pygame.draw.rect(game_window,inactive_color,[btn_xpos, btn_ypos, btn_width, btn_height])
+        pygame.draw.rect(game_window, inactive_color, [btn_xpos, btn_ypos, btn_width, btn_height])
 
     display_message(msg,black, btn_xpos, btn_ypos)
     pygame.display.update()
 
+def check_best_score_to_overwrite(current_score):
+    best_score_file = open('best_score.txt', 'r+')
+    best_score = int(best_score_file.read())
+    best_score_file.seek(0)
+
+    if current_score > best_score:
+        #best_score_file = open('best_score.txt', 'w+')
+        best_score_file.write(str(current_score))
+        display_message(f'Best-score:{current_score}', white,0,70)
+    else:
+        display_message(f'Best-score:{best_score}', blue,0,70)
+
+def show_game_over(w,l):
+    game_over_img = pygame.image.load('game_over.png')
+    game_window.blit(game_over_img,(w,l))
+    pygame.display.update()
+    
+def quit_game():
+    pygame.quit()
+    quit() 
+        
 #########################################################################################################
-def main(): # main GAME LOOP
+############################# MAIN FUNCTION ##################################
+def main(): 
  
     global can_we_close_game, is_game_over 
     
@@ -124,18 +150,16 @@ def main(): # main GAME LOOP
 
         pygame.display.update()
         game_window.fill(black)
-        # This below works only after the game
-        # is over
-        cnt = 0
         
+        cnt = 0
         # Game closes if either snake touches the borders of game window or it 
         # touches itself. Correspondingly can_we_close_game is set to TRUE.
         while can_we_close_game == True:
             cnt += 1
-            mouse = pygame.mouse.get_pos()
-
+        
             show_game_over(window_width_in_pixels*.4,window_height_in_pixels*.3)
-            pygame.display.update()
+            #pygame.display.update()
+            
             # introduce a delay to display game over image
             if cnt == 1:
                 clock.tick(0.25)
@@ -144,27 +168,17 @@ def main(): # main GAME LOOP
             # If so, rewrites the best score.
             # best score (it checks for the file named best_score.txt)
             # in the current directory
-            
             current_score = length_of_snake - 1
             
-            best_score_file = open('best_score.txt')
-            best_score = int(best_score_file.read())
-            best_score_file.seek(0)
-
-            if current_score > best_score:
-                best_score_file = open('best_score.txt', 'w+')
-                best_score_file.write(str(length_of_snake - 1))
-                display_message(f'Best-score:{length_of_snake-1}', white,0,70)
-            else:
-                display_message(f'Best-score:{best_score}', blue,0,70)
+            check_best_score_to_overwrite(current_score)
 
             display_message('Do you want to play again?',green,0,100)
-            button('YES',10,131, 80,40,light_green,green,main)
-            button('NO',100,130, 80,40,light_red,red,quit_game)
+            
+            # shows two buttons to either continue to play or opt for exit
+            show_buttons('YES', main)
+            show_buttons('NO', quit_game)
 
             show_current_score(current_score)
-
-            pygame.display.update()
 
         # Here we handle movement of the snake using arrow keys
         for event in pygame.event.get():
@@ -220,18 +234,18 @@ def main(): # main GAME LOOP
         if len(snake_list) > length_of_snake:
             del snake_list[0]
 
+        # if snake collides itself then game is over
         for x in snake_list[:-1]:
             if x == snake_head:
-                can_we_close_game = True  # if snake collides itself then game is over
+                can_we_close_game = True  
 
         show_snake(snake_size,snake_list)
-        show_current_score(length_of_snake -1) # Displays current score
-
-        pygame.display.update()
+        show_current_score(length_of_snake -1) 
         
-        
+        # The snake eats food if it is near the food and 
+        # length_of_snake is updated everytime the snake eats
         if abs(current_snake_pos_xaxis - int(food_position_x)) <= 5 \
-            and abs(current_snake_pos_yaxis == int(food_position_y)) <= 5:
+            and abs(current_snake_pos_yaxis - int(food_position_y)) <= 5:
             food_position_x = round(random.randrange(0, window_width_in_pixels - snake_size) / 10.0) * 10.0
             food_position_y = round(random.randrange(0, window_height_in_pixels - snake_size) / 10.0) * 10.0
             length_of_snake += 1   # increases the food eaten depending
@@ -240,17 +254,15 @@ def main(): # main GAME LOOP
         
     ####################################################################
     #### If game is over just exit and stop showing the game window ####
-    pygame.quit()
-    quit()
-    ####################################################################
+    quit_game()
+##############################################################################
     
-####################################################################################################
+########################################################################################################
 
 
 # {
 # Driver Code starts
 if __name__ == "__main__":
-    # write your code here
     
     load_and_show_snake_image(window_width_in_pixels*.4,window_height_in_pixels*.3)
     
