@@ -49,88 +49,8 @@ score_font = pygame.font.SysFont('rasa',28)
 
 game_window = pygame.display.set_mode((window_width_in_pixels, window_height_in_pixels)) 
 pygame.display.set_caption('SNAKE GAME') 
-
-############################## Helper Functions #######################################################
-def load_and_show_snake_image(w,l):
-    snake_img = pygame.image.load('Welcome.png')
-    game_window.blit(snake_img,(w,l))
-
-def show_current_score(score):
-    value = score_font.render(f'Your score: {score}', True, yellow)
-    game_window.blit(value, score_position_in_pixel)
-    pygame.display.update()
-
-def display_message(txt,color,w,l):
-    mesg = font_style.render(txt,True, color)
-    game_window.blit(mesg, [w,l])
-
-def show_snake(snake_size, snake_list):
-    global snake_color
-    # Initially snake body is represented by a circle
-    # as snake eats food its body grows
-    # this is acheived by appending the initial body with similar circle
-    # based on the number of food the snake has eaten.
-    #
-    # Here snake_list consists the current position of the snake
-    # to draw snake body in each frame
-    for x in snake_list:
-        #print(x[0], x[1])
-        #pygame.draw.rect(game_window, snake_color, [x[0],x[1], snake_size,snake_size])
-        pygame.draw.circle(game_window, snake_color,[x[0],x[1]], snake_size)
-
-def grab_values_for_button(txt_on_button):
-    if txt_on_button == 'YES':
-        return 10,131, 80,40, (light_green,green)
-    if txt_on_button == 'NO':
-        return 100,130, 80,40 , (light_red, red)
-    
-def show_buttons(msg, action = None):
-    
-    btn_xpos, btn_ypos, btn_width, btn_height, btn_color = grab_values_for_button(msg)
-    inactive_color, active_color = btn_color
-    
-    mouse_pos = pygame.mouse.get_pos()
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
-            and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
-                action()
-
-    if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
-        and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
-        pygame.draw.rect(game_window, active_color, [btn_xpos, btn_ypos, btn_width, btn_height])
-    else:
-        pygame.draw.rect(game_window, inactive_color, [btn_xpos, btn_ypos, btn_width, btn_height])
-
-    display_message(msg,black, btn_xpos, btn_ypos)
-    pygame.display.update()
-
-def check_best_score_to_overwrite(current_score):
-    best_score_file = open('best_score.txt', 'r+')
-    best_score = int(best_score_file.read())
-    best_score_file.seek(0)
-
-    if current_score > best_score:
-        #best_score_file = open('best_score.txt', 'w+')
-        best_score_file.write(str(current_score))
-        display_message(f'Best-score:{current_score}', white,0,70)
-    else:
-        display_message(f'Best-score:{best_score}', blue,0,70)
-
-def show_game_over(w,l):
-    game_over_img = pygame.image.load('game_over.png')
-    game_window.blit(game_over_img,(w,l))
-    pygame.display.update()
-    
-def quit_game():
-    pygame.quit()
-    quit() 
         
 #########################################################################################################
-############################# MAIN FUNCTION ##################################
 def main(): 
  
     global can_we_close_game, is_game_over 
@@ -141,7 +61,7 @@ def main():
     y_change = 0
     
     snake_list = []
-    length_of_snake = 1
+    length_of_snake = 1 #initial length of snake , it increases as it eats food
 
     food_position_x = round(random.randrange(0,window_width_in_pixels - snake_size) /10.0 )* 10.0
     food_position_y = round(random.randrange(0, window_height_in_pixels - snake_size) / 10.0 ) *10.0
@@ -164,10 +84,6 @@ def main():
             if cnt == 1:
                 clock.tick(0.25)
             
-            # Here we check if the current score > best score
-            # If so, rewrites the best score.
-            # best score (it checks for the file named best_score.txt)
-            # in the current directory
             current_score = length_of_snake - 1
             
             check_best_score_to_overwrite(current_score)
@@ -254,9 +170,89 @@ def main():
         
     ####################################################################
     #### If game is over just exit and stop showing the game window ####
-    quit_game()
-##############################################################################
     
+    quit_game()
+
+##############################################################################
+def show_game_over(w,l):
+    game_over_img = pygame.image.load('game_over.png')
+    game_window.blit(game_over_img,(w,l))
+    pygame.display.update()
+    
+def check_best_score_to_overwrite(current_score):
+    best_score_file = open('best_score.txt', 'r+')
+    best_score = int(best_score_file.read())
+    best_score_file.seek(0)
+
+    if current_score > best_score:
+        #best_score_file = open('best_score.txt', 'w+')
+        best_score_file.write(str(current_score))
+        display_message(f'Best-score:{current_score}', white,0,70)
+    else:
+        display_message(f'Best-score:{best_score}', blue,0,70)
+
+def display_message(txt,color,w,l):
+    mesg = font_style.render(txt,True, color)
+    game_window.blit(mesg, [w,l])
+
+def show_buttons(msg, action = None):
+    
+    btn_xpos, btn_ypos, btn_width, btn_height, btn_color = grab_values_for_button(msg)
+    inactive_color, active_color = btn_color
+    
+    mouse_pos = pygame.mouse.get_pos()
+    
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
+            and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
+                action()
+
+    if mouse_pos[0] in range(btn_xpos, btn_xpos + btn_width) \
+        and mouse_pos[1] in range(btn_ypos, btn_ypos + btn_height):
+        pygame.draw.rect(game_window, active_color, [btn_xpos, btn_ypos, btn_width, btn_height])
+    else:
+        pygame.draw.rect(game_window, inactive_color, [btn_xpos, btn_ypos, btn_width, btn_height])
+
+    display_message(msg,black, btn_xpos, btn_ypos)
+    pygame.display.update()
+
+def grab_values_for_button(txt_on_button):
+    if txt_on_button == 'YES':
+        return 10,131, 80,40, (light_green,green)
+    if txt_on_button == 'NO':
+        return 100,130, 80,40 , (light_red, red)
+ 
+
+def show_snake(snake_size, snake_list):
+    global snake_color
+    # Initially snake body is represented by a circle
+    # as snake eats food its body grows
+    # this is acheived by appending the initial body with similar circle
+    # based on the number of food the snake has eaten.
+    #
+    # Here snake_list consists the current position of the snake
+    # to draw snake body in each frame
+    for x in snake_list:
+        #print(x[0], x[1])
+        #pygame.draw.rect(game_window, snake_color, [x[0],x[1], snake_size,snake_size])
+        pygame.draw.circle(game_window, snake_color,[x[0],x[1]], snake_size)
+
+def show_current_score(score):
+    value = score_font.render(f'Your score: {score}', True, yellow)
+    game_window.blit(value, score_position_in_pixel)
+    pygame.display.update()
+
+def quit_game():
+    pygame.quit()
+    quit() 
+
+def load_and_show_snake_image(w,l):
+    snake_img = pygame.image.load('Welcome.png')
+    game_window.blit(snake_img,(w,l))
+
 ########################################################################################################
 
 
