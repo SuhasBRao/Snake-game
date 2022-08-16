@@ -71,31 +71,6 @@ def main():
         pygame.display.update()
         game_window.fill(black)
         
-        cnt = 0
-        # Game closes if either snake touches the borders of game window or it 
-        # touches itself. Correspondingly can_we_close_game is set to TRUE.
-        while can_we_close_game == True:
-            cnt += 1
-        
-            show_game_over(window_width_in_pixels*.4,window_height_in_pixels*.3)
-            #pygame.display.update()
-            
-            # introduce a delay to display game over image
-            if cnt == 1:
-                clock.tick(0.25)
-            
-            current_score = length_of_snake - 1
-            
-            check_best_score_to_overwrite(current_score)
-
-            display_message('Do you want to play again?',green,0,100)
-            
-            # shows two buttons to either continue to play or opt for exit
-            show_buttons('YES', main)
-            show_buttons('NO', quit_game)
-
-            show_current_score(current_score)
-
         # Here we handle movement of the snake using arrow keys
         for event in pygame.event.get():
             # if event is quit / if exit button is pressed it exits from the screen
@@ -168,6 +143,32 @@ def main():
                                     #on the lenght of the snake
         clock.tick(snake_speed)
         
+        cnt = 0
+        # Game closes if either snake touches the borders of game window or it 
+        # touches itself. Correspondingly can_we_close_game is set to TRUE.
+        while can_we_close_game == True:
+            
+            cnt += 1
+        
+            show_game_over(window_width_in_pixels*.4,window_height_in_pixels*.3)
+            #pygame.display.update()
+            
+            # introduce a delay to display game over image
+            if cnt == 1:
+                clock.tick(0.25)
+            
+            current_score = length_of_snake - 1
+            
+            check_best_score_to_overwrite(current_score)
+
+            display_message('Do you want to play again?',green,0,100)
+            
+            # shows two buttons to either continue to play or opt for exit
+            show_buttons('YES', main)
+            show_buttons('NO', quit_game)
+
+            show_current_score(current_score)
+
     ####################################################################
     #### If game is over just exit and stop showing the game window ####
     
