@@ -10,10 +10,18 @@
 # [2]The Welcome to snake game image displayed in the opening has also
 # been modified.
 ######################################################################
+try:
+    import sys
+    import pygame
+    import random
+    from os.path import exists
+except ModuleNotFoundError as e:
+    print()
+    print("Please make sure you have installed necessary modules!!")
+    print("Below module was not found")
+    print(e.name)
+    sys.exit()
 
-import pygame
-import random
-import time
 pygame.init()
 
 ########################################
@@ -260,6 +268,13 @@ def quit_game():
 def load_and_show_snake_image(w,l):
     snake_img = pygame.image.load('Welcome.png')
     game_window.blit(snake_img,(w,l))
+    
+def check_if_all_files_exist(files_list):
+    for file_name in files_list:
+        file_exists = exists(file_name)
+        if not file_exists:
+            raise FileNotFoundError(file_name)
+    return True
 
 ########################################################################################################
 
@@ -268,17 +283,29 @@ def load_and_show_snake_image(w,l):
 # Driver Code starts
 if __name__ == "__main__":
     
-    load_and_show_snake_image(window_width_in_pixels*.4,window_height_in_pixels*.3)
-    
-    display_message('SNAKE GAME',green,window_width_in_pixels/3 + 50,window_height_in_pixels/1.8)
-    
-    display_message('Feed the snakes', white, window_width_in_pixels/3 + 53, window_height_in_pixels/1.8 + 30)
-    
-    pygame.display.update()
-    
-    clock.tick(.25)
-    
-    main()
+
+    # Ensure all the necessary files are present before running the main() function
+    try:
+        files_to_check = ["best_score.txt", "Welcome.png", "game_over.png"]
+        check_if_all_files_exist(files_to_check)
+        
+    except FileNotFoundError as e:
+        print()
+        print(e)
+        print("File not found. Please ensure the above file is the same directory !!")
+        sys.exit()
+        
+    else:
+        load_and_show_snake_image(window_width_in_pixels*.4,window_height_in_pixels*.3)
+
+        display_message('SNAKE GAME',green,window_width_in_pixels/3 + 50,window_height_in_pixels/1.8)
+        
+        display_message('Feed the snakes', white, window_width_in_pixels/3 + 53, window_height_in_pixels/1.8 + 30)
+        
+        pygame.display.update()
+        
+        clock.tick(.25)
+        
+        main()
 
 # } Driver Code ends
-
